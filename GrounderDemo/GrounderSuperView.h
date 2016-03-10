@@ -10,4 +10,5 @@
 
 @interface GrounderSuperView : UIView
 
+- (void)setModel:(id)model;
 @end
