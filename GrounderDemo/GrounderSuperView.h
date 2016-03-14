@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HttpJsonClass.h"
 @interface GrounderSuperView : UIView
 
-- (void)setModel:(ChatData *)model;
+- (void)setModel:(id)model;
 @end

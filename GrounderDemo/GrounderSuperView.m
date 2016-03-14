@@ -36,7 +36,7 @@
     return self;
 }
 
-- (void)setModel:(ChatData *)model{
+- (void)setModel:(id)model{
     [modelArray addObject:model];
     [self checkView];
 }

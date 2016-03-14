@@ -5,7 +5,6 @@
 //  Created by 贾楠 on 16/3/8.
 //  Copyright © 2016年 贾楠. All rights reserved.
 //
-#import "UIColor+Hex.h"
 #import "GrounderView.h"
 @interface GrounderView()
 {
@@ -30,7 +29,7 @@
         [self addSubview:titleLabel];
         
         nameLabel = [[UILabel alloc] init];
-        nameLabel.textColor = k69Red;
+//        nameLabel.textColor = k69Red;
         nameLabel.font = [UIFont systemFontOfSize:10];
         [self addSubview:nameLabel];
      
@@ -45,14 +44,14 @@
     return self;
 }
 
-- (void)setContent:(ChatData *)model{
+- (void)setContent:(id)model{
 
-        nameLabel.text = model.firstName;
+        nameLabel.text = @"哈哈哈";
         nameLabel.frame = CGRectMake(35, 2, [GrounderView calculateMsgWidth:nameLabel.text andWithLabelFont:[UIFont systemFontOfSize:10] andWithHeight:10], 10);
         
-        [headImage setImageWithURL:[NSURL URLWithString:model.srcheadimage]];
-        
-        titleLabel.text = model.contentStr;
+//        [headImage setImageWithURL:[NSURL URLWithString:@""]];
+    
+        titleLabel.text = @"撒的金卡是快乐到家阿斯兰科技大厦";
         titleLabel.frame = CGRectMake(35, 12, [GrounderView calculateMsgWidth:titleLabel.text andWithLabelFont:[UIFont systemFontOfSize:12] andWithHeight:18], 18);
         
         viewWidth = titleLabel.frame.size.width + 55;
@@ -64,12 +63,12 @@
     
 }
 
-- (void)grounderAnimation:(ChatData *)model{
+- (void)grounderAnimation:(id)model{
     float second = 0.0;
-    if (model.contentStr.length < 30){
+    if (titleLabel.text.length < 30){
         second = 10.0f;
     }else{
-        second = model.contentStr.length/2.5;
+        second = titleLabel.text.length/2.5;
     }
     
     [UIView animateWithDuration:second animations:^{
