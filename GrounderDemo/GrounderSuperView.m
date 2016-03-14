@@ -11,8 +11,8 @@
 @interface GrounderSuperView()
 {
     NSMutableArray *grounderArray;
+    NSMutableArray *modelArray;
     NSInteger grounderCount;
-    GrounderView *grounder;
 }
 @end
 @implementation GrounderSuperView
@@ -22,28 +22,62 @@
     self = [super initWithFrame:frame];
     if (self) {
         grounderArray = [[NSMutableArray alloc] init];
+        modelArray = [[NSMutableArray alloc] init];
         grounderCount = 0;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextView:) name:@"nextView" object:nil];
+
+        for (int i = 0; i < 4; i++) {
+            GrounderView *grounder = [[GrounderView alloc] init];
+            grounder.isShow = NO;
+            grounder.index = i;
+            [grounderArray addObject:grounder];
+        }
     }
     return self;
 }
 
-- (void)setModel:(id)model{
-    if (grounderCount % 4 == 0 && grounderCount != 0 && ((GrounderView *)grounderArray[grounderCount - 4]).isShow == YES) {
-        
-    }else{
-        [self addGrounderView:nil];
-    }
-}
-- (void)addGrounderView:(id)model{
-    
-    grounder = [[GrounderView alloc] init];
-    [grounderArray addObject: grounder];
-    grounder.index = grounderCount;
-    [grounderArray[grounderCount] setContent: nil];
-    [self addSubview: grounder];
-    [grounderArray[grounderCount] grounderAnimation];
-    
-    grounderCount = grounderCount + 1;
+- (void)setModel:(ChatData *)model{
+    [modelArray addObject:model];
+    [self checkView];
 }
 
+- (void)nextView:(NSNotification *)notification{
+    [self checkView];
+}
+
+- (void)checkView{
+    if (modelArray.count == 0) {
+        return;
+    }
+    __weak GrounderSuperView *this = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (GrounderView *view in grounderArray) {
+            if (view.isShow == NO) {
+                switch (view.index) {
+                    case 0:
+                        view.selfYposition = 105;
+                        break;
+                    case 1:
+                        view.selfYposition = 70;
+                        break;
+                    case 2:
+                        view.selfYposition = 35;
+                        break;
+                    case 3:
+                        view.selfYposition = 0;
+                        break;
+                    default:
+                        break;
+                }
+                view.isShow = YES;
+                [view setContent:modelArray[0]];
+                [this addSubview:view];
+                [view grounderAnimation:modelArray[0]];
+
+                [modelArray removeObjectAtIndex:0];
+                break;
+            }
+        }
+    });
+}
 @end

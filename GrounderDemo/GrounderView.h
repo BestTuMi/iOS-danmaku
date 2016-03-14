@@ -8,16 +8,18 @@
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 
 #import <UIKit/UIKit.h>
+#import "HttpJsonClass.h"
 
 @interface GrounderView : UIView
-@property (nonatomic, assign) NSInteger index;
 @property (nonatomic, assign) BOOL isShow;
+@property (nonatomic, assign) BOOL previousIsShow;
+@property (nonatomic, assign) NSInteger selfYposition;
+@property (nonatomic, assign) NSInteger index;
 
-- (void)setContent:(id *)model;
-- (void)grounderAnimation;
+- (void)setContent:(ChatData *)model;
+//过场动画，根据长度计算时间
+- (void)grounderAnimation:(ChatData *)model;
 
-//等比换算 按320为基数
-+ (CGFloat)translationWithOriginalNum:(CGFloat)originaNum;
 //固定高度求文字长度
 + (CGFloat)calculateMsgWidth:(NSString *)msg andWithLabelFont:(UIFont*)font andWithHeight:(NSInteger)height;
 @end
