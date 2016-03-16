@@ -37,7 +37,8 @@
 }
 
 - (void)setModel:(id)model{
-    [modelArray addObject:model];
+    //    [modelArray addObject:model];
+    [modelArray addObject:@""];
     [self checkView];
 }
 
